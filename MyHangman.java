@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 import java.util.ArrayList;
 
 public class MyHangman extends JFrame
@@ -15,6 +16,8 @@ public class MyHangman extends JFrame
 	
    // Lists
    private ArrayList found = new ArrayList();
+   private ArrayList wrong = new ArrayList();
+   private ArrayList outArray = new ArrayList();
    
    // Panels
    private JPanel mainPanel;
@@ -185,7 +188,7 @@ public void buildMainPanel()
     	 
     	char[] letters;
     	
-    	found = new ArrayList();
+    	outArray = new ArrayList();
     	  	   	    	
         letters = word.toCharArray();
         
@@ -201,24 +204,33 @@ public void buildMainPanel()
                 			if(temp2[0] == letters[j]){//15
                 				output = output + temp2[0];
                 				found.add(temp2[0]);
+                				outArray.add(temp2[0]);
+                				
+                				if(!found.contains(temp2[0])){
+									wrong.add(temp2[0]);
+								}
                 			}//15;
                 			else{
                 				output = output + "_ ";
-                				found.add("_");
+                				
+                				outArray.add("_");
                 			}
                 		}//14;
                 	
                 
                 		}//13;
-                		else
-                			System.out.print("Guess is too long.");
+            else
+				System.out.print("Guess is too long.");
                 
 
-                reveal.setText(found.toString());
+						outArray.add(found);
+
+						reveal.setText("Correct Tries: " + found.toString() +
+									   "\nWrong Tries: " + wrong.toString());
                 
         }//12;
-        catch(Exception x){//16
-        	System.out.print("Fuck");
+        catch(RuntimeException x){//16
+        	JOptionPane.showMessageDialog(null,"You must enter a letter");
         }//16;
         
         
