@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class MyHangman extends JFrame
-{//0
+{
 
-///////////////////////////////////////////VARIABLE DECLARATION////////////////////////////////////////////////////////
+///////////////////////////////////////////-VARIABLE DECLARATION-////////////////////////////////////////////////////////
 
    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 	
    // Lists
    private ArrayList found = new ArrayList();
@@ -40,7 +40,7 @@ public class MyHangman extends JFrame
    // Textbox
    private static JTextField inputBox = new JTextField(10);
    
-   //Text area
+   // Text area
    private JTextArea reveal = new JTextArea();
    
    // Label
@@ -57,10 +57,10 @@ public class MyHangman extends JFrame
    
    
    
-///////////////////////////////////////////////METHOD OBJECT/////////////////////////////////////////////////////////////
+///////////////////////////////////////////////-METHOD OBJECT-/////////////////////////////////////////////////////////////
    
    public MyHangman(String temp)
-   {//1
+   {
       // Sets title of the window
       setTitle("Hangman");
       
@@ -89,57 +89,57 @@ public class MyHangman extends JFrame
       
       // Shows content
       setVisible(true);
-   }//1;
+   }
       
-//////////////////////////////////////////BUILD MAIN PANEL//////////////////////////////////////////////////////////
+//////////////////////////////////////////-BUILD MAIN PANEL-//////////////////////////////////////////////////////////
       
-
 public void buildMainPanel()
-   {//2
+   {
       mainPanel = new JPanel();
       
-      //buildOutPanel();
+      // Builds panels for objects
       buildInPanel();
       buildButtonPanel();
       
-      //mainPanel.add(outPanel);
+	  // Adds subpanels to the main panel
       mainPanel.add(inPanel);
       mainPanel.add(buttonPanel);
-   }//2;
+   }
    
-///////////////////////////////////////////BUILD OPENING OUTPANEL///////////////////////////////////////////////////////////
+///////////////////////////////////////////-BUILD OPENING OUTPANEL-///////////////////////////////////////////////////////////
 
    public void buildOutPanel()
-   {//3
+   {
       outPanel = new JPanel();
       
       numOfLetters = word.length();
       
-      for(int i = 1;i<=numOfLetters;i++){//4
+      for(int i = 1;i<=numOfLetters;i++)
+      {//118;120
     	  dashes = dashes + "_ ";
-      }//4;
+      }//118;120
       
       reveal = new JTextArea("" + dashes, 30,30);
       reveal.setEditable(false);
       
       outPanel.add(reveal);
       
-   }//3;
+   }
    
  /////////////////////////////////////////////-INPUT PANEL-\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
    
    public void buildInPanel()
-   {//5
+   {
       inPanel = new JPanel();
       
       inPanel.add(inLabel);
       inPanel.add(inputBox);
-   }//5;
+   }
    
  /////////////////////////////////////////////////-BUTTON PANEL-\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
    
    public void buildButtonPanel()
-   {//6
+   {
       buttonPanel = new JPanel();
       
       button.addActionListener(new ButtonListener());
@@ -147,10 +147,12 @@ public void buildMainPanel()
       
       buttonPanel.add(button);
       buttonPanel.add(reset);
-   }//6;
+   }
  
  ////////////////////////////////////////////////////-PAINT FUNCTION-\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-   public void paint(Graphics g){//7
+   
+   public void paint(Graphics g)
+   {
 		super.paint(g);
 	   	
 	   	//Stand to hang the character
@@ -161,31 +163,29 @@ public void buildMainPanel()
 	   	
 	   	
 	   	
-   }//7;
-      
+   }
+         
+/////////////////////////////////////////////////////////-RESET BUTTON-///////////////////////////////////////////////////////
    
-/////////////////////////////////////////////////////////RESET BUTTON///////////////////////////////////////////////////////
    private class ButtonListenerR implements ActionListener
-   {//8
+   {
       public void actionPerformed(ActionEvent e)
-      {//9
+      {
+		  
          dispose();
          new wordGen();
          
-
-      }//9;
-   }//8;
+      }
+   }
    
 ////////////////////////////////////////////////////////TRY BUTTON/////////////////////////////////////////////////////////
-
    
-   
-
- private class ButtonListener implements ActionListener
-   {//10
+   private class ButtonListener implements ActionListener
+   {
       public void actionPerformed(ActionEvent e)
-      {//11
-    	 
+      {
+    	
+    	// Variable Declaration 
     	char[] letters;
     	
     	outArray = new ArrayList();
@@ -193,54 +193,60 @@ public void buildMainPanel()
         letters = word.toCharArray();
         
         temp1 = inputBox.getText();
-        
+     
         temp2 = temp1.toCharArray();
+        // End of Variable Delcaration
         
-        output = "";
-        try{//12
-        	if(temp1.length() <= word.length()){//13
-                
-                		for(int j = 0; j < word.length(); j++){//14
-                			if(temp2[0] == letters[j]){//15
-                				output = output + temp2[0];
-                				found.add(temp2[0]);
-                				outArray.add(temp2[0]);
-                				
-                				if(!found.contains(temp2[0])){
-									wrong.add(temp2[0]);
-								}
-                			}//15;
-                			else{
-                				output = output + "_ ";
-                				
-                				outArray.add("_");
-                			}
-                		}//14;
-                	
-                
-                		}//13;
-            else
-				System.out.print("Guess is too long.");
-                
-
-						outArray.add(found);
-
-						reveal.setText("Correct Tries: " + found.toString() +
-									   "\nWrong Tries: " + wrong.toString());
-                
-        }//12;
-        catch(RuntimeException x){//16
-        	JOptionPane.showMessageDialog(null,"You must enter a letter");
-        }//16;
-        
-        
-            
-    }//11;
-
-    
- }//10;
- 
- 
+        inputBox.setText("");
        
-}//0;
+        try
+        {
+        	if(temp1.length() <= 1)
+        	{               		
+				if(word.contains(temp1))
+				{
+								
+					if(!found.contains(temp2[0]))
+					{
+						found.add(temp2[0]);
+				    }
+				    
+                }
+                				
+                else if(!word.contains(temp1))
+                {
+					
+					if(!wrong.contains(temp2[0]))
+					{
+						wrong.add(temp2[0]);
+				    }
+				
+				}               	
+			}			
+            else
+				JOptionPane.showMessageDialog(null, "Guess is too long.");
+               
+         
+            // Changes the text in the ouput box.  
+			reveal.setText(/*reveal.getText()*/ + "\nCorrect Tries: " + found.toString() +
+						   "\nWrong Tries: " + wrong.toString());
+			repaint();// Keeps the things from paint method.
+			
+/////////////////////////////////////////////// NEEDS WORK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!			
+			
+			if(found.size() == letters.length)
+			{
+				JOptionPane.showMessageDialog(null,"Congratz the word was " +
+				word);
+			}
+////////////////////////////////////////////// NEEDS WORK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                
+        }
+        catch(RuntimeException x)
+        {
+        	JOptionPane.showMessageDialog(null,"You must enter a letter");
+		}
+    }
+ }
+}
   
